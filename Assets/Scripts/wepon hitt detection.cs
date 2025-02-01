@@ -24,7 +24,7 @@ public class CollisionExample : MonoBehaviour
         // Access specific components on the other collider
         Collider otherCollider = collision.collider;
         // Log the name of the other GameObject
-        Debug.Log("Collided with: " + otherObject.name + "with"+otherCollider.name+ " colider");
+        Debug.Log("Collided with: " + otherObject.name + "with"+otherCollider.name+ " colider"+collision);
     }
 
     // Called while this GameObject is colliding with another
