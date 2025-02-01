@@ -7,8 +7,8 @@ public class CollisionExample : MonoBehaviour
     float force;
     private void OnDrawGizmosSelected()
     {
-        Debug.Log("drawed " + Collision);
-       if (Collision != null & force !< 0)
+        Debug.Log("drawed " + Collision + " with speed "+ force);
+       if (Collision != null & force > 0)
         {
             Debug.Log("drew " + Collision.contacts);
             int i = 0;
@@ -17,7 +17,7 @@ public class CollisionExample : MonoBehaviour
                     Gizmos.DrawSphere(Collision.contacts[i].point, force);
                     i++;
             }
-            if (force > 0) { force= force--; }
+            if (force > 0) { force= force-0.1f; }
         }
     }
     // Called when this GameObject starts colliding with another non-trigger collider
@@ -30,7 +30,7 @@ public class CollisionExample : MonoBehaviour
         // Access specific components on the other collider
         Collider otherCollider = collision.collider;
         // Log the name of the other GameObject
-        Debug.Log("Collided with: " + otherObject.name + " with "+otherCollider.name+ " colider and collision "+collision);
+        Debug.Log("Collided with: " + otherObject.name + " with "+otherCollider.name+ " colider and collision "+collision+" at "+force+"speed");
     }
 
     // Called while this GameObject is colliding with another
