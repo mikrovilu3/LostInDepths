@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class CollisionExample : MonoBehaviour
 {      Collision Collision;
+    float force;
     private void OnDrawGizmosSelected()
     {
         Debug.Log("drawed " + Collision);
-       if (Collision != null)
+       if (Collision != null & force !< 0)
         {
             Debug.Log("drew " + Collision.contacts);
             int i = 0;
             Gizmos.color = Color.red;
             foreach (var item in Collision.contacts) { 
-                    Gizmos.DrawSphere(Collision.contacts[i].point, 1);
+                    Gizmos.DrawSphere(Collision.contacts[i].point, force);
                     i++;
             }
+            if (force > 0) { force= force--; }
         }
     }
     // Called when this GameObject starts colliding with another non-trigger collider
     private void OnCollisionEnter(Collision collision)
     { Collision=collision;
+        force = collision.relativeVelocity.magnitude;
         // Get the GameObject of the other collider
         GameObject otherObject = collision.gameObject;
 
