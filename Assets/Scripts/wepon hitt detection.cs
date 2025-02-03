@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CollisionExample : MonoBehaviour
 {      Collision Collision;
-    float force; 
+    float force;
+    float maxForce;
     private void OnDrawGizmos()
     {
         
@@ -23,6 +24,7 @@ public class CollisionExample : MonoBehaviour
     // Called when this GameObject starts colliding with another non-trigger collider
     private void OnCollisionEnter(Collision collision)
     { Collision=collision;
+        maxForce = force;
         force = collision.relativeVelocity.magnitude;
         // Get the GameObject of the other collider
         GameObject otherObject = collision.gameObject;
@@ -34,9 +36,12 @@ public class CollisionExample : MonoBehaviour
     }
 
     // Called while this GameObject is colliding with another
-    private void OnCollisionStay(Collision collision)
-    {
-        if (force > 0) { force = force - 0.05f; }
+    public void Update ()
+    {   
+
+        if (force > 0) {
+            force = force - 0.05f;
+        }
     }
 
     // Called when this GameObject stops colliding with anothers
@@ -44,6 +49,7 @@ public class CollisionExample : MonoBehaviour
     {
         Debug.Log("Stopped colliding with: " + collision.gameObject.name);
         Collision = null;
+        maxForce = null;
     }
 
 }
