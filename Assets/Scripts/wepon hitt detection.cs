@@ -5,7 +5,6 @@ using UnityEngine;
 public class CollisionExample : MonoBehaviour
 {      Collision Collision;
     float force;
-    float maxForce;
     private void OnDrawGizmos()
     {
         
@@ -24,7 +23,6 @@ public class CollisionExample : MonoBehaviour
     // Called when this GameObject starts colliding with another non-trigger collider
     private void OnCollisionEnter(Collision collision)
     { Collision=collision;
-        maxForce = force;
         force = collision.relativeVelocity.magnitude;
         // Get the GameObject of the other collider
         GameObject otherObject = collision.gameObject;
@@ -33,6 +31,14 @@ public class CollisionExample : MonoBehaviour
         Collider otherCollider = collision.collider;
         // Log the name of the other GameObject
         Debug.Log("Collided with: " + otherObject.name + " with "+otherCollider.name+ " colider and collision "+collision+" at "+force+"speed");
+        
+        if (collision.gameObject.CompareTag("enemy")) {
+            Material material = otherObject.GetComponent<MeshRenderer>().material;
+            float r = material.color.r;
+            Color c = material.color;
+            c[0] = r + 0.1f*force;
+            material.color= c;
+        }
     }
 
     // Called while this GameObject is colliding with another
@@ -48,7 +54,7 @@ public class CollisionExample : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         Collision = null;
-        maxForce = -1;
+        
     }
 
 }
