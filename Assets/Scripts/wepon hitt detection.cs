@@ -49,7 +49,7 @@ public class CollisionExample : MonoBehaviour
     {
         Debug.Log("Stopped colliding with: " + collision.gameObject.name);
         Collision = null;
-        maxForce = null;
+        maxForce = -1;
     }
 
 }
