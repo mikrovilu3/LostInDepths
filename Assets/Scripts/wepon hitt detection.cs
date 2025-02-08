@@ -47,7 +47,6 @@ public class CollisionExample : MonoBehaviour
     // Called when this GameObject stops colliding with anothers
     private void OnCollisionExit(Collision collision)
     {
-        Debug.Log("Stopped colliding with: " + collision.gameObject.name);
         Collision = null;
         maxForce = -1;
     }
