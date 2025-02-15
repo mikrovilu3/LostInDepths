@@ -30,7 +30,7 @@ public class CollisionExample : MonoBehaviour
         // Access specific components on the other collider
         Collider otherCollider = collision.collider;
         // Log the name of the other GameObject
-        Debug.Log("Collided with: " + otherObject.name + " with "+otherCollider.name+ " colider and collision "+collision+" at "+force+"speed");
+        Debug.Log("Collided with: " + otherObject.name + " with "+otherCollider.name+ " colider and collision "+collision+" at "+force+"speed ");
         
         if (collision.gameObject.CompareTag("enemy")) {
             Material material = otherObject.GetComponent<MeshRenderer>().material;
@@ -46,16 +46,16 @@ public class CollisionExample : MonoBehaviour
     {   
 
         if (force > 0) {
-            force = force - 0.05f;
+            force -=  0.05f;
         }
     }
 
     // Called when this GameObject stops colliding with anothers
-    private void OnCollisionExit(Collision collision)
-    {
-        Collision = null;
+    //private void OnCollisionExit(Collision collision)
+    //{
+        //Collision = null;
         
-    }
+    //}
 
 }
 
