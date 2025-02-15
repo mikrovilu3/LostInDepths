@@ -7,8 +7,8 @@ public class MoveToClickPoint : MonoBehaviour
     NavMeshAgent agent;
     public Camera Camera_debug;
     public GameObject target;
-    public float searchRadius=1;
-    public float searchTime=1;
+    public float searchRadius = 1;
+    public float searchTime = 1;
     Vector3 randomOfSet ;
     void ReRandom()
     {
