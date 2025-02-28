@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,38 +8,71 @@ public class MoveToClickPoint : MonoBehaviour
 {
     NavMeshAgent agent;
     public Camera Camera_debug;
-    public GameObject target;
+    [Tooltip("0 = player; 1 = low health hiding spot; 2 =< patrol points")]
+    public GameObject [] targets;
     public float searchRadius = 1;
     public float searchTime = 1;
+    public float patrolChangeTime = 5;
+    public float MaxHealth = 100;
+    public float Health => MaxHealth;
+    public float LowHealthThreshold = 20;
     Vector3 randomOfSet ;
+    
     void ReRandom()
     {
-        randomOfSet = Random.insideUnitSphere * searchRadius ;
+        randomOfSet = UnityEngine.Random.insideUnitSphere * searchRadius ;
+        Invoke("ReRandom", searchTime);
     }
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        InvokeRepeating("ReRandom", 0, searchTime);
+        ReRandom();
     }
-    Ray ray;
+    public int currentTarget = 1;
     void Update()
     {
+        int lastUpdateSecond = 0;
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
-             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(Camera_debug.ScreenPointToRay(Input.mousePosition), out hit, 100))
             {
-                target.transform.position = hit.point;
+                targets[0].transform.position = hit.point;
             }
             Debug.Log(hit.point);
         }
-        agent.destination = target.transform.position + randomOfSet; 
+        if (targets[0] != null)
+        {
+            Debug.Log(Time.time+" "+ Math.Floor(Time.time));
+            if (Health > LowHealthThreshold)
+            {
+                if (Physics.Raycast(transform.position, (transform.position - targets[0].transform.position).normalized, 1000, 4))
+                {
+                    Debug.Log("fuck");
+                    agent.destination = targets[0].transform.position + randomOfSet;
+                    currentTarget = 1;
+                }
+                else
+                {
+                    agent.destination = targets[currentTarget-1].transform.position + randomOfSet;
+                    if (1 > Math.Floor(Time.time) % patrolChangeTime && currentTarget >= targets.Length !& lastUpdateSecond==Math.Floor(Time.time) )
+                    {   lastUpdateSecond = Convert.ToInt32( Math.Floor(Time.time));
+                        currentTarget = 1;
+                    }
+                    if (currentTarget < targets.Length && 1 > Math.Floor(Time.time) % patrolChangeTime !& lastUpdateSecond==Math.Floor(Time.time) )
+                    {
+                        lastUpdateSecond = Convert.ToInt32( Math.Floor(Time.time));
+                        currentTarget++;
+                    }
+                }
+
+            }
+            else if (Health < LowHealthThreshold)
+            {
+                agent.destination = targets[1].transform.position + randomOfSet;
+            }
+        }
     }
-    private void OnDrawGizmos()
-    {
-            Gizmos.DrawRay(ray);
-        
-    }
+    
 }
