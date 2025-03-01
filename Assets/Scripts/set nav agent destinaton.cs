@@ -62,18 +62,18 @@ public class MoveToClickPoint : MonoBehaviour
                     {
                        
                         nextUpdateSecond = Convert.ToInt32(patrolChangeTime + Math.Floor(Time.time));
-                        if (currentTarget == targets.Length)
+                        if (currentTarget == targets.Length-1)
                         {
                             currentTarget = 1;
                             Debug.Log(" reset " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond+" "+targets.Length);
                         }
-                        else if (currentTarget < targets.Length-1)
+                        else if (currentTarget < targets.Length)
                         {
                             currentTarget++;
                             Debug.Log("iterate " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond);
                         }
                     }
-                    else { Debug.Log("no change " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond+" "+targets.Length); }
+                    
                 }
                 agent.destination = targets[currentTarget].transform.position + randomOfSet;
             }
