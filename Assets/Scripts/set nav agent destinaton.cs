@@ -8,13 +8,13 @@ public class MoveToClickPoint : MonoBehaviour
 {
     NavMeshAgent agent;
     public Camera Camera_debug;
-    [Tooltip("0 = player; 1 = low health hiding spot; 2 =< patrol points")]
+    [Tooltip("0 = player; 1 = low health hiding spot; 1 =< patrol points")]
     public GameObject [] targets;
     public float searchRadius = 1;
     public float searchTime = 1;
     public float patrolChangeTime = 5;
     public float MaxHealth = 100;
-    public float Health => MaxHealth;
+    public float Health ;
     public float LowHealthThreshold = 20;
     Vector3 randomOfSet ;
     public int currentTarget = 1;
@@ -28,6 +28,7 @@ public class MoveToClickPoint : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         ReRandom();
+        Health = MaxHealth;
     }
     
     void Update()
@@ -36,8 +37,8 @@ public class MoveToClickPoint : MonoBehaviour
         int nextUpdateSecond = 0;
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera_debug.ScreenPointToRay(Input.mousePosition), out hit, 100))
+             
+            if (Physics.Raycast(Camera_debug.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 100))
             {
                 targets[0].transform.position = hit.point;
             }
@@ -45,30 +46,36 @@ public class MoveToClickPoint : MonoBehaviour
         }
         if (targets[0] != null)
         {
-           
+            
             if (Health > LowHealthThreshold)
             {
+                
                 if (Physics.Raycast(transform.position, (transform.position - targets[0].transform.position).normalized, 1000, 8))
                 {
                     Debug.Log("fuck");
-                    agent.destination = targets[0].transform.position + randomOfSet;
-                    currentTarget = 1;
+                    currentTarget = 0;
                 }
                 else
                 {
-                    agent.destination = targets[currentTarget-1].transform.position + randomOfSet;
-                    if (1 > Math.Floor(Time.time) % patrolChangeTime && currentTarget >= targets.Length && nextUpdateSecond==Math.Floor(Time.time) )
-                    {   nextUpdateSecond = 1+Convert.ToInt32( Math.Floor(Time.time));
-                        currentTarget = 1;
-                    }
-                    if (currentTarget < targets.Length && 1 > Math.Floor(Time.time) % patrolChangeTime && nextUpdateSecond==Math.Floor(Time.time) )
+                    
+                    if (nextUpdateSecond == Math.Floor(Time.time))
                     {
-                        nextUpdateSecond = 1+Convert.ToInt32( Math.Floor(Time.time));
-                        Debug.Log("updated" +Time.time+" "+ Math.Floor(Time.time)+" "+nextUpdateSecond+" "+ Convert.ToInt32(Math.Floor(Time.time)));
-                        currentTarget++;
+                        Debug.Log("update");
+                        nextUpdateSecond = Convert.ToInt32(patrolChangeTime + Math.Floor(Time.time));
+                        if (currentTarget <= targets.Length)
+                        {
+                            currentTarget = 1;
+                            Debug.Log(" reset " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond);
+                        }
+                        else if (currentTarget > targets.Length)
+                        {
+                            currentTarget++;
+                            Debug.Log("iterate " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond);
+                        }
                     }
+                    else { Debug.Log("no change " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond); }
                 }
-
+                agent.destination = targets[currentTarget].transform.position + randomOfSet;
             }
             else if (Health < LowHealthThreshold)
             {

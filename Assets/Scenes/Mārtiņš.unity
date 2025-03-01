@@ -3326,8 +3326,9 @@ MonoBehaviour:
   searchTime: 1
   patrolChangeTime: 5
   MaxHealth: 100
+  Health: 0
   LowHealthThreshold: 20
-  currentTarget: 1
+  currentTarget: 0
 --- !u!135 &7467535167707741608
 SphereCollider:
   m_ObjectHideFlags: 0
