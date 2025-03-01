@@ -38,6 +38,9 @@ public class CollisionExample : MonoBehaviour
             Color c = material.color;
             c[0] = r + 0.1f*force;
             material.color= c;
+            if(otherObject.GetComponent<MoveToClickPoint>() != null)
+            otherObject.GetComponent<MoveToClickPoint>().Take(force);
+            Debug.Log("dealt "+force);
         }
     }
 

@@ -83,5 +83,8 @@ public class MoveToClickPoint : MonoBehaviour
             }
         }
     }
-    
+    public void Take(float damage)
+    {
+        Health -= damage;
+    }
 }
