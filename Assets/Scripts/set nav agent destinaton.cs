@@ -30,11 +30,11 @@ public class MoveToClickPoint : MonoBehaviour
         ReRandom();
         Health = MaxHealth;
     }
-    
+    int nextUpdateSecond = 0;
     void Update()
     {
         
-        int nextUpdateSecond = 0;
+        
         if (Input.GetMouseButtonDown(0))
         {
              
@@ -60,20 +60,20 @@ public class MoveToClickPoint : MonoBehaviour
                     
                     if (nextUpdateSecond == Math.Floor(Time.time))
                     {
-                        Debug.Log("update");
+                       
                         nextUpdateSecond = Convert.ToInt32(patrolChangeTime + Math.Floor(Time.time));
-                        if (currentTarget <= targets.Length)
+                        if (currentTarget == targets.Length)
                         {
                             currentTarget = 1;
-                            Debug.Log(" reset " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond);
+                            Debug.Log(" reset " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond+" "+targets.Length);
                         }
-                        else if (currentTarget > targets.Length)
+                        else if (currentTarget < targets.Length-1)
                         {
                             currentTarget++;
                             Debug.Log("iterate " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond);
                         }
                     }
-                    else { Debug.Log("no change " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond); }
+                    else { Debug.Log("no change " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond+" "+targets.Length); }
                 }
                 agent.destination = targets[currentTarget].transform.position + randomOfSet;
             }
