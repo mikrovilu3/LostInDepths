@@ -2869,7 +2869,7 @@ Transform:
   m_GameObject: {fileID: 1870787585}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.12, y: 0, z: 0.07}
+  m_LocalPosition: {x: -8.82, y: 0, z: -8.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3269,8 +3269,8 @@ GameObject:
   - component: {fileID: 2392668151386034275}
   - component: {fileID: 6782433381947436745}
   - component: {fileID: 3303104684141241940}
-  - component: {fileID: 7467535167707741605}
   - component: {fileID: 7467535167707741607}
+  - component: {fileID: 7467535167707741605}
   - component: {fileID: 7467535167707741608}
   - component: {fileID: 7467535167707741609}
   m_Layer: 0
@@ -3318,6 +3318,10 @@ MonoBehaviour:
   targets:
   - {fileID: 144168748}
   - {fileID: 1870787585}
+  - {fileID: 1594304970}
+  - {fileID: 1074181129}
+  - {fileID: 311631518}
+  - {fileID: 1610464801}
   searchRadius: 1.97
   searchTime: 1
   patrolChangeTime: 5

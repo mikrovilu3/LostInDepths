@@ -17,7 +17,7 @@ public class MoveToClickPoint : MonoBehaviour
     public float Health => MaxHealth;
     public float LowHealthThreshold = 20;
     Vector3 randomOfSet ;
-    
+    public int currentTarget = 1;
     void ReRandom()
     {
         randomOfSet = UnityEngine.Random.insideUnitSphere * searchRadius ;
@@ -29,10 +29,11 @@ public class MoveToClickPoint : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         ReRandom();
     }
-    public int currentTarget = 1;
+    
     void Update()
     {
-        int lastUpdateSecond = 0;
+        
+        int nextUpdateSecond = 0;
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
@@ -44,10 +45,10 @@ public class MoveToClickPoint : MonoBehaviour
         }
         if (targets[0] != null)
         {
-            Debug.Log(Time.time+" "+ Math.Floor(Time.time));
+           
             if (Health > LowHealthThreshold)
             {
-                if (Physics.Raycast(transform.position, (transform.position - targets[0].transform.position).normalized, 1000, 4))
+                if (Physics.Raycast(transform.position, (transform.position - targets[0].transform.position).normalized, 1000, 8))
                 {
                     Debug.Log("fuck");
                     agent.destination = targets[0].transform.position + randomOfSet;
@@ -56,13 +57,14 @@ public class MoveToClickPoint : MonoBehaviour
                 else
                 {
                     agent.destination = targets[currentTarget-1].transform.position + randomOfSet;
-                    if (1 > Math.Floor(Time.time) % patrolChangeTime && currentTarget >= targets.Length !& lastUpdateSecond==Math.Floor(Time.time) )
-                    {   lastUpdateSecond = Convert.ToInt32( Math.Floor(Time.time));
+                    if (1 > Math.Floor(Time.time) % patrolChangeTime && currentTarget >= targets.Length && nextUpdateSecond==Math.Floor(Time.time) )
+                    {   nextUpdateSecond = 1+Convert.ToInt32( Math.Floor(Time.time));
                         currentTarget = 1;
                     }
-                    if (currentTarget < targets.Length && 1 > Math.Floor(Time.time) % patrolChangeTime !& lastUpdateSecond==Math.Floor(Time.time) )
+                    if (currentTarget < targets.Length && 1 > Math.Floor(Time.time) % patrolChangeTime && nextUpdateSecond==Math.Floor(Time.time) )
                     {
-                        lastUpdateSecond = Convert.ToInt32( Math.Floor(Time.time));
+                        nextUpdateSecond = 1+Convert.ToInt32( Math.Floor(Time.time));
+                        Debug.Log("updated" +Time.time+" "+ Math.Floor(Time.time)+" "+nextUpdateSecond+" "+ Convert.ToInt32(Math.Floor(Time.time)));
                         currentTarget++;
                     }
                 }
