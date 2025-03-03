@@ -23,7 +23,7 @@ public class MoveToClickPoint : MonoBehaviour
         randomOfSet = UnityEngine.Random.insideUnitSphere * searchRadius ;
         Invoke("ReRandom", searchTime);
     }
-
+    Ray ray;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -49,8 +49,8 @@ public class MoveToClickPoint : MonoBehaviour
             
             if (Health > LowHealthThreshold)
             {
-                
-                if (Physics.Raycast(transform.position, (transform.position - targets[0].transform.position).normalized, 1000, 8))
+                 ray = new Ray (transform.position,targets[0].transform.position);Physics.Raycast(ray,out, 1000, 8)
+                if ()
                 {
                     Debug.Log("fuck");
                     currentTarget = 0;
@@ -86,5 +86,10 @@ public class MoveToClickPoint : MonoBehaviour
     public void Take(float damage)
     {
         Health -= damage;
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(ray);
     }
 }
