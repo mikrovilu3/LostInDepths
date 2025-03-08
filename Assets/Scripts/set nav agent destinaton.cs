@@ -55,13 +55,13 @@ public class MoveToClickPoint : MonoBehaviour
 
                 if ( hit.collider != null && hit.collider.name == "player colider"||hit.collider.name== " XR Origin (XR Rig)")
                 {
-                    Debug.Log("fuck");
+                    
                     currentTarget = 0;
                     nextUpdateSecond = Math.Floor(Time.time)+1;
                 }
                 else
                 {
-                    Debug.Log("hit info"+hit+" "+hit.point +" "+hit.collider);
+                    
                     
                     if (nextUpdateSecond == Math.Floor(Time.time))
                     {
