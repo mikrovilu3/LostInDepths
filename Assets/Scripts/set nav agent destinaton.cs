@@ -29,8 +29,9 @@ public class MoveToClickPoint : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         ReRandom();
         Health = MaxHealth;
+       
     }
-    int nextUpdateSecond = 0;
+    double nextUpdateSecond = 0;RaycastHit hit;
     void Update()
     {
         
@@ -38,7 +39,7 @@ public class MoveToClickPoint : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
              
-            if (Physics.Raycast(Camera_debug.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 100))
+            if (Physics.Raycast(Camera_debug.ScreenPointToRay(Input.mousePosition), out hit, 100))
             {
                 targets[0].transform.position = hit.point;
             }
@@ -49,19 +50,23 @@ public class MoveToClickPoint : MonoBehaviour
             
             if (Health > LowHealthThreshold)
             {
-                 ray = new Ray (transform.position,targets[0].transform.position);Physics.Raycast(ray,out, 1000, 8)
-                if ()
+                 ray = new Ray (transform.position,targets[0].transform.position-transform.position+new Vector3(0f,1f,0f)+(UnityEngine.Random.insideUnitSphere*0.2f));                
+                if(Physics.Raycast(ray, out hit, float.PositiveInfinity)) { 
+
+                if ( hit.collider != null && hit.collider.name == "player colider"||hit.collider.name== " XR Origin (XR Rig)")
                 {
                     Debug.Log("fuck");
                     currentTarget = 0;
+                    nextUpdateSecond = Math.Floor(Time.time)+1;
                 }
                 else
                 {
+                    Debug.Log("hit info"+hit+" "+hit.point +" "+hit.collider);
                     
                     if (nextUpdateSecond == Math.Floor(Time.time))
                     {
                        
-                        nextUpdateSecond = Convert.ToInt32(patrolChangeTime + Math.Floor(Time.time));
+                        nextUpdateSecond = patrolChangeTime + Math.Floor(Time.time);
                         if (currentTarget == targets.Length-1)
                         {
                             currentTarget = 1;
@@ -74,7 +79,7 @@ public class MoveToClickPoint : MonoBehaviour
                         }
                     }
                     
-                }
+                }}
                 agent.destination = targets[currentTarget].transform.position + randomOfSet;
             }
             else if (Health < LowHealthThreshold)
@@ -87,9 +92,5 @@ public class MoveToClickPoint : MonoBehaviour
     {
         Health -= damage;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(ray);
-    }
+    
 }
