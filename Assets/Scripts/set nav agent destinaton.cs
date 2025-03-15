@@ -50,36 +50,38 @@ public class MoveToClickPoint : MonoBehaviour
             
             if (Health > LowHealthThreshold)
             {
-                 ray = new Ray (transform.position,targets[0].transform.position-transform.position+new Vector3(0f,1f,0f)+(UnityEngine.Random.insideUnitSphere*0.2f));                
-                if(Physics.Raycast(ray, out hit, float.PositiveInfinity)) { 
-
-                if ( hit.collider != null && hit.collider.name == "player colider"||hit.collider.name== " XR Origin (XR Rig)")
+                 ray = new Ray (transform.position,targets[0].transform.position-transform.position+new Vector3(0f,1f,0f)+(UnityEngine.Random.insideUnitSphere*0.2f));
+                if (Physics.Raycast(ray, out hit, float.PositiveInfinity)&&(hit.collider != null && hit.collider.name == "player colider" || hit.collider.name == " XR Origin (XR Rig)"))
                 {
+
                     
-                    currentTarget = 0;
-                    nextUpdateSecond = Math.Floor(Time.time)+1;
+
+                        currentTarget = 0;
+                        nextUpdateSecond = Math.Floor(Time.time) + 1;
+                    
                 }
                 else
                 {
-                    
-                    
+
+
                     if (nextUpdateSecond == Math.Floor(Time.time))
                     {
-                       
+
                         nextUpdateSecond = patrolChangeTime + Math.Floor(Time.time);
-                        if (currentTarget == targets.Length-1)
+                        if (currentTarget == targets.Length - 1)
                         {
                             currentTarget = 1;
-                            Debug.Log(" reset " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond+" "+targets.Length);
+                            Debug.Log(" reset " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond + " " + targets.Length);
                         }
                         else if (currentTarget < targets.Length)
                         {
                             currentTarget++;
-                            Debug.Log("iterate " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond);
+                            Debug.Log("iterate " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond + " " +currentTarget);
                         }
                     }
-                    
-                }}
+
+                }
+                
                 agent.destination = targets[currentTarget].transform.position + randomOfSet;
             }
             else if (Health < LowHealthThreshold)
