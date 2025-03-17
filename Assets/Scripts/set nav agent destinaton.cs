@@ -12,7 +12,7 @@ public class MoveToClickPoint : MonoBehaviour
     public GameObject [] targets;
     public float searchRadius = 1;
     public float searchTime = 1;
-    public float patrolChangeTime = 5;
+    public int patrolChangeTime = 5;
     public float MaxHealth = 100;
     public float Health ;
     public float LowHealthThreshold = 20;
@@ -29,7 +29,7 @@ public class MoveToClickPoint : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         ReRandom();
         Health = MaxHealth;
-       
+        currentTarget = 1;
     }
     double nextUpdateSecond = 0;RaycastHit hit;
     void Update()
@@ -76,7 +76,7 @@ public class MoveToClickPoint : MonoBehaviour
                         else if (currentTarget < targets.Length)
                         {
                             currentTarget++;
-                            Debug.Log("iterate " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond + " " +currentTarget);
+                            Debug.Log("iterate " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond + " " +currentTarget + " " + targets.Length + " " + Time.deltaTime);
                         }
                     }
 

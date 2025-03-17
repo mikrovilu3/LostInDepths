@@ -587,7 +587,6 @@ GameObject:
   - component: {fileID: 199239240}
   - component: {fileID: 199239239}
   - component: {fileID: 199239238}
-  - component: {fileID: 199239241}
   m_Layer: 2
   m_Name: weponHitBox
   m_TagString: Untagged
@@ -603,12 +602,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199239236}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.06, y: 7.5, z: -0.3187251}
+  m_LocalScale: {x: 1.4615, y: 0.22447638, z: 0.21330029}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1594304976}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &199239238
 MonoBehaviour:
@@ -672,19 +671,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &199239241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 199239236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 509b7edd164ae4b4bb8b0bcfe5bf3791, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handle: {fileID: 1594304970}
 --- !u!1 &311631518
 GameObject:
   m_ObjectHideFlags: 0
@@ -2439,6 +2425,7 @@ GameObject:
   - component: {fileID: 1594304972}
   - component: {fileID: 1594304977}
   - component: {fileID: 1594304978}
+  - component: {fileID: 1594304979}
   m_Layer: 0
   m_Name: wepon
   m_TagString: Untagged
@@ -2559,8 +2546,7 @@ Transform:
   m_LocalPosition: {x: 3.06, y: 7.5, z: -0.3187251}
   m_LocalScale: {x: 1.4615, y: 0.22447638, z: 0.21330029}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 199239237}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!208 &1594304977
@@ -2701,6 +2687,22 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
+--- !u!138 &1594304979
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594304970}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 199239240}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &1610464801
 GameObject:
   m_ObjectHideFlags: 0
@@ -3728,7 +3730,7 @@ MonoBehaviour:
   MaxHealth: 100
   Health: 0
   LowHealthThreshold: 20
-  currentTarget: 1
+  currentTarget: 45
 --- !u!135 &7467535167707741608
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3785,6 +3787,7 @@ SceneRoots:
   - {fileID: 1074181133}
   - {fileID: 1389873036}
   - {fileID: 311631523}
+  - {fileID: 199239237}
   - {fileID: 1594304976}
   - {fileID: 2392668151386034275}
   - {fileID: 1744024107}
