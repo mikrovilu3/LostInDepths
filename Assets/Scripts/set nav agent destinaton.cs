@@ -71,12 +71,12 @@ public class MoveToClickPoint : MonoBehaviour
                         if (currentTarget == targets.Length - 1)
                         {
                             currentTarget = 1;
-                            Debug.Log(" reset " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond + " " + targets.Length);
+                           // Debug.Log(" reset " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond + " " + targets.Length);
                         }
                         else if (currentTarget < targets.Length)
                         {
                             currentTarget++;
-                            Debug.Log("iterate " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond + " " +currentTarget + " " + targets.Length + " " + Time.deltaTime);
+                           // Debug.Log("iterate " + Time.time + " " + Math.Floor(Time.time) + " " + nextUpdateSecond + " " +currentTarget + " " + targets.Length + " " + Time.deltaTime);
                         }
                     }
 

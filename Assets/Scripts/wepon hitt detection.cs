@@ -32,14 +32,14 @@ public class CollisionExample : MonoBehaviour
         // Log the name of the other GameObject
         Debug.Log("Collided with: " + otherObject.name + " with "+otherCollider.name+ " colider and collision "+collision+" at "+force+"speed ");
         
-        if (collision.gameObject.CompareTag("enemy")) {
+        if (collision.gameObject.CompareTag("enemy") || collision.gameObject.CompareTag("PLAYER")) {
             Material material = otherObject.GetComponent<MeshRenderer>().material;
             float r = material.color.r;
             Color c = material.color;
             c[0] = r + 0.1f*force;
             material.color= c;
-            if(otherObject.GetComponent<MoveToClickPoint>() != null)
-            otherObject.GetComponent<MoveToClickPoint>().Take(force);
+            if(otherObject.GetComponent<Dsamage_Handeler>() != null) { 
+            otherObject.GetComponent<Dsamage_Handeler>().Take(force);}
             Debug.Log("dealt "+force);
         }
     }
