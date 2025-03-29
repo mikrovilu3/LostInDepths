@@ -3,13 +3,23 @@ using UnityEngine.UI;
 
 public class Player_Heath : MonoBehaviour
 {
-    public float MaxHealth=100;
-    public float health;
+    public float MaxHealth = 100f;
+     float health;
     public Slider healthSlider;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         health = MaxHealth;
+
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = MaxHealth;
+            healthSlider.value = health;
+        }
+        else
+        {
+            Debug.LogError("Health Slider is not assigned in the Inspector!");
+        }
     }
 
     public void UpdateVisualHealth()
@@ -18,14 +28,18 @@ public class Player_Heath : MonoBehaviour
         {
             healthSlider.value = health;
         }
-        else { Debug.LogError("health slider is null"); }
-
+        else
+        {
+            Debug.LogError("Health slider is null");
+        }
     }
 
     public void Take(float damage)
     {
-        health -= damage;
+        Debug.Log("Before taking damage: " + health+" "+damage); // Check the health value before modification
+        health = health - damage;
+        Debug.Log("After taking damage: " + health+" "+damage);  // Check the health value after modification
+
         UpdateVisualHealth();
     }
-
 }
