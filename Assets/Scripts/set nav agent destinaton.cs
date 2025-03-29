@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class MoveToClickPoint : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class MoveToClickPoint : MonoBehaviour
     public float LowHealthThreshold = 20;
     Vector3 randomOfSet ;
     public int currentTarget = 1;
+    public GameObject health_bar;
+       Slider health_slider;
+    public float damage;
     void ReRandom()
     {
         randomOfSet = UnityEngine.Random.insideUnitSphere * searchRadius ;
@@ -25,7 +29,7 @@ public class MoveToClickPoint : MonoBehaviour
     }
     Ray ray;
     void Start()
-    {
+    {   health_slider = health_bar.GetComponent<Slider>();
         agent = GetComponent<NavMeshAgent>();
         ReRandom();
         Health = MaxHealth;
@@ -53,8 +57,11 @@ public class MoveToClickPoint : MonoBehaviour
                  ray = new Ray (transform.position,targets[0].transform.position-transform.position+new Vector3(0f,1f,0f)+(UnityEngine.Random.insideUnitSphere*0.2f));
                 if (Physics.Raycast(ray, out hit, float.PositiveInfinity)&&(hit.collider != null && hit.collider.name == "player colider" || hit.collider.name == " XR Origin (XR Rig)"))
                 {
-
-                    
+                    if (3f > Vector3.Distance(targets[0].transform.position, transform.position)) {
+                        targets[0].GetComponent<Dsamage_Handeler>().Take(damage);
+                        Debug.Log("dealt damage");
+                    }
+                       // Debug.Log(Vector3.Distance(targets[0].transform.position, transform.position));
 
                         currentTarget = 0;
                         nextUpdateSecond = Math.Floor(Time.time) + 1;
@@ -93,6 +100,11 @@ public class MoveToClickPoint : MonoBehaviour
     public void Take(float damage)
     {
         Health -= damage;
+        if (health_slider != null)
+        {
+            health_slider.value = Health;
+        }
+        else { Debug.LogError("health slider is null"); }
     }
     
 }
