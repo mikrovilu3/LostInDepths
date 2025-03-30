@@ -21,7 +21,9 @@ public class MoveToClickPoint : MonoBehaviour
     public int currentTarget = 1;
     public GameObject health_bar;
        Slider health_slider;
-    public float damage;
+    public float damage=1;
+    public float atackInterval =2;
+    float atimer=0;
     void ReRandom()
     {
         randomOfSet = UnityEngine.Random.insideUnitSphere * searchRadius ;
@@ -38,7 +40,7 @@ public class MoveToClickPoint : MonoBehaviour
     double nextUpdateSecond = 0;RaycastHit hit;
     void Update()
     {
-        
+        atimer += Time.deltaTime;
         
         if (Input.GetMouseButtonDown(0))
         {
@@ -57,11 +59,12 @@ public class MoveToClickPoint : MonoBehaviour
                  ray = new Ray (transform.position,targets[0].transform.position-transform.position+new Vector3(0f,1f,0f)+(UnityEngine.Random.insideUnitSphere*0.2f));
                 if (Physics.Raycast(ray, out hit, float.PositiveInfinity)&&(hit.collider != null && hit.collider.name == "player colider" || hit.collider.name == " XR Origin (XR Rig)"))
                 {
-                    if (3f > Vector3.Distance(targets[0].transform.position, transform.position)) {
+                    if (3f > Vector3.Distance(targets[0].transform.position, transform.position)&&atimer>atackInterval) {
                         targets[0].GetComponent<Dsamage_Handeler>().Take(damage);
                         Debug.Log("dealt damage");
+                        atimer = 0;
                     }
-                       // Debug.Log(Vector3.Distance(targets[0].transform.position, transform.position));
+                    //    Debug.Log(Vector3.Distance(targets[0].transform.position, transform.position)+" "+atimer);
 
                         currentTarget = 0;
                         nextUpdateSecond = Math.Floor(Time.time) + 1;

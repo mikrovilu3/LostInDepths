@@ -4204,7 +4204,8 @@ MonoBehaviour:
   LowHealthThreshold: 20
   currentTarget: 45
   health_bar: {fileID: 1584870766}
-  damage: 0
+  damage: 1
+  atackInterval: 2
 --- !u!135 &7467535167707741608
 SphereCollider:
   m_ObjectHideFlags: 0
