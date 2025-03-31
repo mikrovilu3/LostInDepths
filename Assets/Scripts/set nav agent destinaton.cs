@@ -24,10 +24,12 @@ public class MoveToClickPoint : MonoBehaviour
     public float damage=1;
     public float atackInterval =2;
     float atimer=0;
+    bool IsAtacking;
+    public float atackTime = 1;
     void ReRandom()
     {
         randomOfSet = UnityEngine.Random.insideUnitSphere * searchRadius ;
-        Invoke("ReRandom", searchTime);
+        Invoke(nameof(ReRandom), searchTime);
     }
     Ray ray;
     void Start()
@@ -60,9 +62,8 @@ public class MoveToClickPoint : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, float.PositiveInfinity)&&(hit.collider != null && hit.collider.name == "player colider" || hit.collider.name == " XR Origin (XR Rig)"))
                 {
                     if (3f > Vector3.Distance(targets[0].transform.position, transform.position)&&atimer>atackInterval) {
-                        targets[0].GetComponent<Dsamage_Handeler>().Take(damage);
-                        Debug.Log("dealt damage");
                         atimer = 0;
+                        Invoke(nameof(Atack),1f);
                     }
                     //    Debug.Log(Vector3.Distance(targets[0].transform.position, transform.position)+" "+atimer);
 
@@ -91,8 +92,15 @@ public class MoveToClickPoint : MonoBehaviour
                     }
 
                 }
+                if (IsAtacking)
+                {
+                    agent.destination = targets[currentTarget].transform.position;
+                }
+                else if (!IsAtacking)
+                {
+                    agent.destination = targets[currentTarget].transform.position + randomOfSet;
+                }
                 
-                agent.destination = targets[currentTarget].transform.position + randomOfSet;
             }
             else if (Health < LowHealthThreshold)
             {
@@ -109,5 +117,15 @@ public class MoveToClickPoint : MonoBehaviour
         }
         else { Debug.LogError("health slider is null"); }
     }
-    
+    void EndAtack() {
+        IsAtacking = false;
+    }
+    void Atack()
+    {
+        targets[0].GetComponent<Dsamage_Handeler>().Take(damage);
+        Debug.Log("dealt damage");
+        
+        IsAtacking = true;
+        Invoke(nameof(EndAtack), atackTime);
+    }
 }
