@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MoveToClickPoint : MonoBehaviour
 {
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     public Camera Camera_debug;
     [Tooltip("0 = player; 1 = low health hiding spot; 1 =< patrol points")]
     public GameObject [] targets;
@@ -104,6 +104,7 @@ public class MoveToClickPoint : MonoBehaviour
             }
             else if (Health < LowHealthThreshold)
             {
+                Debug.Log("low health "+Health+" "+targets);
                 agent.destination = targets[1].transform.position + randomOfSet;
             }
         }
