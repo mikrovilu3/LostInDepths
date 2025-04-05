@@ -37,7 +37,7 @@ public class Player_Heath : MonoBehaviour
     public void Take(float damage)
     {
         //Debug.Log("Before taking damage: " + health+" "+damage); // Check the health value before modification
-        health = health - damage;
+        health =- damage;
         //Debug.Log("After taking damage: " + health+" "+damage);  // Check the health value after modification
 
         UpdateVisualHealth();
